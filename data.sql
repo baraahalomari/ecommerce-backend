@@ -1,0 +1,56 @@
+CREATE DATABASE ecommerce;
+
+CREATE TABLE comments (
+  id BIGSERIAL PRIMARY KEY NOT NULL ,
+  product_id INT NOT NULL,
+  user_name VARCHAR(255) NOT NULL,
+  comment TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
+
+CREATE TABLE favorites (
+  id BIGSERIAL NOT NULL,
+  user_id INTEGER NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  selectedFile TEXT NOT NULL,
+  price DECIMAL(10,2) NOT NULL,
+  status VARCHAR(255) DEFAULT 'INSTOCK',
+  category VARCHAR(255),
+  FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
+
+CREATE TABLE cart (
+  id BIGSERIAL NOT NULL,
+  item_name VARCHAR(255) NOT NULL,
+  item_price DECIMAL(10,2) NOT NULL,
+  quantity INT NOT NULL,
+  selectedFile TEXT NOT NULL,
+  total_price DECIMAL(10,2) DEFAULT 0,
+  user_id BIGSERIAL NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
+
+CREATE TABLE products (
+  id BIGSERIAL PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  price DECIMAL(10,2) NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  selectedFile TEXT NOT NULL,
+  category VARCHAR(255),
+  user_id BIGSERIAL NOT NULL,
+  status VARCHAR(255) DEFAULT 'INSTOCK',
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+DROP TABLE products;
+
+CREATE TABLE users (
+  id BIGSERIAL PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  country VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
