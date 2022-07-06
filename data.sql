@@ -11,26 +11,20 @@ CREATE TABLE comments (
 
 CREATE TABLE favorites (
   id BIGSERIAL NOT NULL,
-  user_id INTEGER NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  description VARCHAR(255) NOT NULL,
-  selectedFile TEXT NOT NULL,
-  price DECIMAL(10,2) NOT NULL,
-  status VARCHAR(255) DEFAULT 'INSTOCK',
-  category VARCHAR(255),
-  FOREIGN KEY (user_id) REFERENCES users (id)
+  user_id BIGSERIAL NOT NULL,
+  product_id BIGSERIAL NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 
 
 CREATE TABLE cart (
-  id BIGSERIAL NOT NULL,
-  item_name VARCHAR(255) NOT NULL,
-  item_price DECIMAL(10,2) NOT NULL,
   quantity INT NOT NULL,
-  selectedFile TEXT NOT NULL,
   total_price DECIMAL(10,2) DEFAULT 0,
   user_id BIGSERIAL NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users (id)
+  product_id BIGSERIAL NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 
 
